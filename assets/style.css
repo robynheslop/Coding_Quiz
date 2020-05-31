@@ -1,0 +1,21 @@
+h1 {
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+}
+
+p {
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+}
+
+
+
+
+
+/* format the buttons at bottom of text of document */
+.large-button {
+    width: 150px;
+    display: block;
+}
