@@ -27,48 +27,76 @@
 
 <body>
     <!-- persistant button outside container to link to view highscores -->
-    <button type="button" class="btn btn-outline-primary btn-sm mx-auto" id="persistant-link-to-HS">View Highscores</button>
+    <button type="button" class="btn btn-outline-primary btn-sm mx-auto" id="persistant-link-to-HS">View
+        Highscores</button>
 
     <div class="container">
         <div class="row">
             <div class="col-md-1">
             </div>
             <div class="col-md-9 m-3 p-3">
-            <!-- Displayed before quiz starts -->
+                <!-- Displayed before quiz starts -->
                 <span id="opening-page">
                     <h1>Coding Quiz</h1>
-                    <p>Let's see what you have learned! Answer these coding related questions. Keep in mind the timer - any wrong answers will penalise your score/timer by 15!</p>
+                    <p>Let's see what you have learned! Answer these coding related questions. Keep in mind the timer -
+                        any wrong answers will penalise your score/timer by 15!</p>
                     <!-- button to commence quiz -->
-                    <button type="button" class="btn btn-primary btn-lg mx-auto large-button" id="start-button">OK</button>
+                    <button type="button" class="btn btn-primary btn-lg mx-auto large-button"
+                        id="start-button">OK</button>
                 </span>
 
                 <!-- quiz -->
                 <span id="questions-displayed" style="display:none">
 
                     <h1>Questions</h1>
-                    
+
                     <h2 id="currentQuestion"></h2>
-                        <button class="d-flex flex-column" type="submit" value="Submit" id="option1"></button>
-                        <button class="d-flex flex-column" type="submit" value="Submit" id="option2"></button>
-                        <button class="d-flex flex-column" type="submit" value="Submit" id="option3"></button>
-                        <button class="d-flex flex-column" type="submit" value="Submit" id="option4"></button>
-                  
+                    <div class="answerOptions">
+                        <button class="d-flex flex-column answerOptions" type="submit" value="Submit" id="option1"></button>
+                        <button class="d-flex flex-column answerOptions" type="submit" value="Submit" id="option2"></button>
+                        <button class="d-flex flex-column answerOptions" type="submit" value="Submit" id="option3"></button>
+                        <button class="d-flex flex-column answerOptions" type="submit" value="Submit" id="option4"></button>
+                    </div>
+
                     <!-- where to publish the result of the last question, left empty at beginning ---- set a fixed height later-->
                     <span id="lastResult"></span>
 
 
                     <!-- button to exit quiz and go to view highscores -->
-                    <button type="button" class="btn btn-primary btn-lg mx-auto large-button" id="go-to-HS">Exit Quiz</button>
-                    
+                    <button type="button" class="btn btn-primary btn-lg mx-auto large-button" id="go-to-HS">Exit
+                        Quiz</button>
+
                 </span>
+
+                <span id="enter-HS-displayed" style="display:none">
+                    <h1>All done!</h1>
+                    <p>Enter your initals below</p>
+                    <form class="form-inline">
+                        <div class="form-group mb-2">
+                          <input type="text" readonly class="form-control-plaintext" value="Enter Initials">
+                        </div>
+                        <div class="form-group mx-sm-3 mb-2">
+                          <input type="text" class="form-control" placeholder="e.g. AB">
+                        </div>
+                        <button type="submit" class="btn btn-primary mb-2" id="submitInitials">Submit</button>
+                      </form>
+
+                </span>
+
+
+
+
+
+
+
+
 
                 <!-- highscores -->
                 <span id="highscores-displayed" style="display:none">
-                    <h1>Highscores</h1>  
+                    <h1>Highscores</h1>
                     <!-- button to return home -->
-                    <button type="button" class="btn btn-primary btn-lg mx-auto large-button" id="go-back-to-home">Go back</button>
-                        
-
+                    <button type="button" class="btn btn-primary btn-lg mx-auto large-button" id="go-back-to-home">Go
+                        back</button>
                 </span>
             </div>
             <div class="col-md-1">
