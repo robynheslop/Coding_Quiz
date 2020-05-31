@@ -149,18 +149,26 @@ function markQuestions() {
 }
 
 
+function storeInfo() {
+    localStorage.setItem("highscores", JSON.stringify(highscores));
+}
+
+
 function renderInfo() {
     x = 0;
     highScoreList.innerHTML = "";
 
     for (k = 0; k < highscores.length; k++) {
-        
-        var highScore = highscores[k];
+        // accessing string stored in local storage, turning it back into array
+        var storedHighScore = JSON.parse(localStorage.getItem("highscores"));
+        // create list new element 
         li = document.createElement("li");
-        li.textContent = highScore;
+        // set the text element of list to match the appropriate item from the array
+        li.textContent = storedHighScore[k];
+        // set an attribute to the list item equal to current k value
         li.setAttribute("data-index", k);
+        // append li item to ordered list of highscores 
         highScoreList.appendChild(li);
-        
     }
     showHS();
 
@@ -189,8 +197,7 @@ linkToHighScoresButton.addEventListener("click", showHS);
 displayQuestions.addEventListener("click", clickQuestions);
 submitDataButton.addEventListener("click", function(event) {
     event.preventDefault();
-    var HSText = submittedInitials.value;
-    console.log(HSText);
+    var HSText = submittedInitials.value.trim();
     if (HSText === "") {
         return;
     }
@@ -198,6 +205,7 @@ submitDataButton.addEventListener("click", function(event) {
     highscores.push(HSText);
     HSText.value = "";
     console.log(highscores)
+    storeInfo();
     renderInfo();
 });
 
