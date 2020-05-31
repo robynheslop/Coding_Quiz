@@ -1,15 +1,28 @@
-// create variables to 3 buttons 
+// create variables to start quiz button
 var startButton = document.querySelector("#start-button");
+// create variable to EXIT QUIZ button and move to highscores
 var exitQuizButton = document.querySelector("#go-to-HS");
+// create variable for button on HS screen to return home
 var returnHomeButton = document.querySelector("#go-back-to-home");
+
 // create variables to control display of spans 
 var displayOpeningPage = document.querySelector("#opening-page");
 var displayQuestions = document.querySelector("#questions-displayed");
+// link to score board 
 var displayHighScores = document.querySelector("#highscores-displayed");
+// link to high score submission
 var enterHS = document.querySelector("#enter-HS-displayed");
 // create variable to persistant HS button outside contianer
-var linkToHighScores = document.querySelector("#persistant-link-to-HS");
+var linkToHighScoresButton = document.querySelector("#persistant-link-to-HS");
+// create variable linking to button to clear high scores
+var clearHighScoresButton = document.querySelector("#clear-high-scores");
+// 
+var submitDataButton = document.querySelector("#submitInitials");
 
+//create variable for submiting data button 
+var submittedInitials = document.querySelector("#initials");
+//link to submiting data button 
+var highScoreList = document.querySelector("#high-scores-list");
 // access text content of "questions" span
 var displayedQuestion = document.querySelector("#currentQuestion");
 var displayedOption1 = document.querySelector("#option1");
@@ -18,7 +31,10 @@ var displayedOption3 = document.querySelector("#option3");
 var displayedOption4 = document.querySelector("#option4");
 
 var answer = document.querySelector("answerOptions");
+// empty variable to loop through in question display
 var j = 0;
+
+var highscores = [];
 
 
 var questions = [
@@ -70,16 +86,17 @@ function showQuestions() {
     displayOpeningPage.style.display = "none";
     displayQuestions.style.display = "block";
     displayHighScores.style.display = "none";
-    linkToHighScores.style.visibility = "visible";
+    linkToHighScoresButton.style.visibility = "visible";
     populateQuestions()
 }
 
 function showHS() {
     event.preventDefault();
+    enterHS.style.display = "none";
     displayOpeningPage.style.display = "none";
     displayQuestions.style.display = "none";
     displayHighScores.style.display = "block";
-    linkToHighScores.style.visibility = "hidden";
+    linkToHighScoresButton.style.visibility = "hidden";
 }
 
 function showHome() {
@@ -87,11 +104,19 @@ function showHome() {
     displayOpeningPage.style.display = "block";
     displayQuestions.style.display = "none";
     displayHighScores.style.display = "none";
-    linkToHighScores.style.visibility = "visible";
+    linkToHighScoresButton.style.visibility = "visible";
+}
+
+function showScoreSubmission() {
+    displayOpeningPage.style.display = "none";
+    displayQuestions.style.display = "none";
+    displayHighScores.style.display = "none";
+    enterHS.style.display = "block";
+    linkToHighScoresButton.style.visibility = "hidden";
 }
 
 function populateQuestions() {
-    
+
     for (i = 0; i < questions.length; i++) {
         if (j < questions.length) {
             displayedQuestion.textContent = questions[j].question;
@@ -100,17 +125,15 @@ function populateQuestions() {
             displayedOption3.textContent = questions[j].answer3;
             displayedOption4.textContent = questions[j].answer4;
         } else {
-            displayOpeningPage.style.display = "none";
-            displayQuestions.style.display = "none";
-            displayHighScores.style.display = "none";
-            enterHS.style.display = "block";
-            linkToHighScores.style.visibility = "hidden";
+            // update display and move to submitting scores
+            showScoreSubmission()
+            j = 0;
+            i = 0;
         }
-        
-       
-    }    
+    }
 }
 
+// function executed when user clicks on an answer button ** MUST UPDATE AS IT INCLUDES ANOTHER BUTTON RIGHT NOW
 function clickQuestions() {
     if (event.target.matches("button")) {
         j = j + 1;
@@ -120,13 +143,63 @@ function clickQuestions() {
     }
 }
 
-function markQuestions() { 
+// compare if buttton click matches the right answer 
+function markQuestions() {
 
 }
+
+
+function renderInfo() {
+    x = 0;
+    highScoreList.innerHTML = "";
+
+    for (k = 0; k < highscores.length; k++) {
+        
+        var highScore = highscores[k];
+        li = document.createElement("li");
+        li.textContent = highScore;
+        li.setAttribute("data-index", k);
+        highScoreList.appendChild(li);
+        
+    }
+    showHS();
+
+}
+
+
+
+function emptyHS() {
+    
+    // while (highScoreList.hasChildNodes()) {
+    //     li.parentNode.removeChild(li);
+    // }
+
+    } 
+
+
+
 
 
 startButton.addEventListener("click", showQuestions);
 exitQuizButton.addEventListener("click", showHS);
 returnHomeButton.addEventListener("click", showHome);
-linkToHighScores.addEventListener("click", showHS);
+linkToHighScoresButton.addEventListener("click", showHS);
+
+
 displayQuestions.addEventListener("click", clickQuestions);
+submitDataButton.addEventListener("click", function(event) {
+    event.preventDefault();
+    var HSText = submittedInitials.value;
+    console.log(HSText);
+    if (HSText === "") {
+        return;
+    }
+    
+    highscores.push(HSText);
+    HSText.value = "";
+    console.log(highscores)
+    renderInfo();
+});
+
+
+clearHighScoresButton.addEventListener("click", emptyHS);
