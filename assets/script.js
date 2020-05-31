@@ -81,6 +81,9 @@ var questions = [
 ];
 
 
+// FUNCTIONS 
+
+// function to display question span
 function showQuestions() {
     event.preventDefault();
     displayOpeningPage.style.display = "none";
@@ -90,6 +93,7 @@ function showQuestions() {
     populateQuestions()
 }
 
+// function to display highscore board span
 function showHS() {
     event.preventDefault();
     enterHS.style.display = "none";
@@ -99,6 +103,7 @@ function showHS() {
     linkToHighScoresButton.style.visibility = "hidden";
 }
 
+// function to display homepage span
 function showHome() {
     event.preventDefault();
     displayOpeningPage.style.display = "block";
@@ -107,6 +112,7 @@ function showHome() {
     linkToHighScoresButton.style.visibility = "visible";
 }
 
+// function to display score submission
 function showScoreSubmission() {
     displayOpeningPage.style.display = "none";
     displayQuestions.style.display = "none";
@@ -115,6 +121,7 @@ function showScoreSubmission() {
     linkToHighScoresButton.style.visibility = "hidden";
 }
 
+// function to pass through the questions 
 function populateQuestions() {
 
     for (i = 0; i < questions.length; i++) {
@@ -148,12 +155,12 @@ function markQuestions() {
 
 }
 
-
+// function to store submitted initials and scores in local storage
 function storeInfo() {
     localStorage.setItem("highscores", JSON.stringify(highscores));
 }
 
-
+// function to render information from local storage and pin in to high score list
 function renderInfo() {
     x = 0;
     highScoreList.innerHTML = "";
@@ -171,21 +178,15 @@ function renderInfo() {
         highScoreList.appendChild(li);
     }
     showHS();
-
 }
 
 
-
+// function to clear local storage, clear high score array and render to clear list of high scores 
 function emptyHS() {
-    
-    // while (highScoreList.hasChildNodes()) {
-    //     li.parentNode.removeChild(li);
-    // }
-
+    localStorage.clear();
+    highscores = [];
+    renderInfo();
     } 
-
-
-
 
 
 startButton.addEventListener("click", showQuestions);
