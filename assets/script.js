@@ -40,6 +40,7 @@ var j = 0;
 
 var highscores = [];
 
+var startTime = 75
 
 var questions = [
     {
@@ -95,6 +96,7 @@ function showQuestions() {
     displayHighScores.style.display = "none";
     linkToHighScoresButton.style.visibility = "visible";
     quizTimer.style.visibility = "visible";
+    setTime();
     startTimer();
     populateQuestions();
 }
@@ -118,6 +120,7 @@ function showHome() {
     displayHighScores.style.display = "none";
     linkToHighScoresButton.style.visibility = "visible";
     quizTimer.style.visibility = "visible";
+    clearTimer()
 }
 
 // function to display score submission
@@ -131,12 +134,25 @@ function showScoreSubmission() {
 }
 
 
-function startTimer() {
-    currentTime.textContent = 75;
+function setTime() {
+    currentTime.textContent = startTime;
+    
 }
 
 
 
+function startTimer() {
+    
+    // var countdown = cur
+    // interval = setInterval(function() {
+    // secondsPassing = 0
+    // }, 1000);
+}
+
+
+function clearTimer() {
+    currentTime.textContent = 0
+}
 
 
 
