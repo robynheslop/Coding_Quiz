@@ -34,8 +34,6 @@ var displayedOption2 = document.querySelector("#option2");
 var displayedOption3 = document.querySelector("#option3");
 var displayedOption4 = document.querySelector("#option4");
 
-// var answer = document.querySelector("answerOptions");
-
 // empty variable to loop through in question display
 var j = 0;
 
@@ -50,6 +48,8 @@ var displayTime = "";
 
 // starting time for quiz gives user 75 seconds
 var startTime = 75;
+
+var finalTime = "";
 
 var questions = [
     {
@@ -172,6 +172,8 @@ function startTimer() {
     if (now == 0) {
         // stop timer
         clearInterval(interval);
+        finalTime = displayTime;
+        console.log(displayTime);
         renderTime();
     }
     }, 1000);
@@ -192,7 +194,10 @@ function populateQuestions() {
         correctAnswer = questions[j].correct_answer;
     } else {
         // once all questions are answered - stop timer 
-        clearInterval(interval);
+        clearInterval(interval); 
+
+        finalTime = displayTime;
+        console.log(displayTime);
         // update display to submitting score form
         showScoreSubmission()
         // reset variable used to loop (cleared for any future quizzes)
@@ -246,6 +251,7 @@ function wrongAnswer() {
 // function to store submitted initials and scores in local storage
 function storeInfo() {
     localStorage.setItem("highscores", JSON.stringify(highscores));
+
 }
 
 // function to render information from local storage and pin in to high score list
@@ -253,13 +259,22 @@ function renderInfo() {
     x = 0;
     highScoreList.innerHTML = "";
 
+    // accessing string stored in local storage, turning it back into array
+    var storedHighScore = JSON.parse(localStorage.getItem("highscores"));
+    // sort array by the scores (high score becomes obj 0, 2nd highests obj 1)
+    storedHighScore.sort(function(a, b) {
+        return b.score - a.score;
+    });
+    // create for loop the length of high score array
     for (k = 0; k < highscores.length; k++) {
-        // accessing string stored in local storage, turning it back into array
-        var storedHighScore = JSON.parse(localStorage.getItem("highscores"));
         // create list new element 
         li = document.createElement("li");
-        // set the text element of list to match the appropriate item from the array
-        li.textContent = storedHighScore[k];
+        // access appropriate objects in variable and constuct display text to show data
+        var publishName = storedHighScore[k].name;
+        var publishScore = storedHighScore[k].score;
+        var publishingTExt = (publishScore + " - " + publishName);
+        // set the text element of list to publishing text var
+        li.textContent = publishingTExt;
         // set an attribute to the list item equal to current k value
         li.setAttribute("data-index", k);
         // append li item to ordered list of highscores 
@@ -283,14 +298,33 @@ linkToHighScoresButton.addEventListener("click", showHS);
 displayQuestions.addEventListener("click", clickQuestions);
 submitDataButton.addEventListener("click", function(event) {
     event.preventDefault();
+    // create variable for submitted initials 
     var HSText = submittedInitials.value.trim();
+    // create variable for score from final time
+    var score = finalTime;
+
+    var q = 0
+    // if no initials entered, ________________________________
     if (HSText === "") {
         return;
-    }
+    } 
     
-    highscores.push(HSText);
+
+    // create object to store name and score
+    var highscoresObject = {};
+    highscoresObject.name = HSText;
+    highscoresObject.score = score;
+
+    console.log(highscoresObject)
+
+    // push the object onto array called highscores
+    highscores.push(highscoresObject);
+
+    // empty initials for any future submissions
     HSText.value = "";
-    console.log(highscores)
+    submittedInitials.value= "";
+    // empty form after data saved
+    
     storeInfo();
     renderInfo();
 });
