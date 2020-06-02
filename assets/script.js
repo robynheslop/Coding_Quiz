@@ -34,17 +34,21 @@ var displayedOption2 = document.querySelector("#option2");
 var displayedOption3 = document.querySelector("#option3");
 var displayedOption4 = document.querySelector("#option4");
 
-var answer = document.querySelector("answerOptions");
+// var answer = document.querySelector("answerOptions");
 
 // empty variable to loop through in question display
 var j = 0;
 
+// 
 var correctAnswer = "";
 
+// hgih scores start off empty
 var highscores = [];
 
+// create var display time - initially empty
 var displayTime = "";
 
+// starting time for quiz gives user 75 seconds
 var startTime = 75;
 
 var questions = [
@@ -138,6 +142,7 @@ function showScoreSubmission() {
     quizTimer.style.visibility = "visible";
 }
 
+// function to update display of time
 function renderTime() {
     currentTime.textContent = displayTime;
 }
@@ -156,7 +161,7 @@ function clearTime() {
 
 // function to countdown timer each second and update display 
 function startTimer() {
-    // create function to count down 
+    // create function to count down (runs every 1000 milliseconds)
     interval = setInterval(function() {
         // new variable to remove 1 from the current time displayed
     var now = currentTime.textContent - 1;
@@ -165,6 +170,7 @@ function startTimer() {
     renderTime();
     // if timer reaches 0 stop countdown 
     if (now == 0) {
+        // stop timer
         clearInterval(interval);
         renderTime();
     }
@@ -219,12 +225,22 @@ function markQuestions() {
 }
 
 function wrongAnswer() {
-    // create new variable defined by currented displayed time less 15 seconds 
-    var newScore = currentTime.textContent - 15;
-    // update display time to reflect new score
-    displayTime = newScore;
-    // update display 
-    renderTime();
+    // if user has more than 15 seconds remaining 
+    if (currentTime.textContent > 15) {
+        // create new variable defined by currented displayed time less 15 seconds
+        var newScore = currentTime.textContent - 15;
+        // update display time to reflect new score
+        displayTime = newScore;
+        // update display 
+        renderTime();
+    } else {
+        // if they have 15 seconds or less left, set display time to 0
+        displayTime = 0
+        // update display
+        renderTime();
+    }
+    
+    
 }
 
 // function to store submitted initials and scores in local storage
