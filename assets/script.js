@@ -20,6 +20,9 @@ var clearHighScoresButton = document.querySelector("#clear-high-scores");
 // 
 var submitDataButton = document.querySelector("#submitInitials");
 
+
+var currentTime = document.querySelector("#current-time");
+
 //create variable for submiting data button 
 var submittedInitials = document.querySelector("#initials");
 //link to submiting data button 
@@ -92,7 +95,8 @@ function showQuestions() {
     displayHighScores.style.display = "none";
     linkToHighScoresButton.style.visibility = "visible";
     quizTimer.style.visibility = "visible";
-    populateQuestions()
+    startTimer();
+    populateQuestions();
 }
 
 // function to display highscore board span
@@ -125,6 +129,17 @@ function showScoreSubmission() {
     linkToHighScoresButton.style.visibility = "visible";
     quizTimer.style.visibility = "visible";
 }
+
+
+function startTimer() {
+    currentTime.textContent = 75;
+}
+
+
+
+
+
+
 
 // function to pass through the questions 
 function populateQuestions() {
