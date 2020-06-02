@@ -35,6 +35,7 @@ var displayedOption3 = document.querySelector("#option3");
 var displayedOption4 = document.querySelector("#option4");
 
 var answer = document.querySelector("answerOptions");
+
 // empty variable to loop through in question display
 var j = 0;
 
@@ -174,50 +175,55 @@ function startTimer() {
 
 // function to pass through the questions 
 function populateQuestions() {
-
-    for (i = 0; i < questions.length; i++) {
-        if (j < questions.length) {
-            displayedQuestion.textContent = questions[j].question;
-            displayedOption1.textContent = questions[j].answer1;
-            displayedOption2.textContent = questions[j].answer2;
-            displayedOption3.textContent = questions[j].answer3;
-            displayedOption4.textContent = questions[j].answer4;
-            correctAnswer = questions[j].correct_answer;
-        } else {
-            // once all questions are answered - stop timer 
-            clearInterval(interval);
-            // update display to submitting score
-            showScoreSubmission()
-            j = 0;
-            i = 0;
-        }
+    // variable j used to loop through objects within array
+    if (j < questions.length) {
+        // update display on buttons - reflect the contents of objects in questions array
+        displayedQuestion.textContent = questions[j].question;
+        displayedOption1.textContent = questions[j].answer1;
+        displayedOption2.textContent = questions[j].answer2;
+        displayedOption3.textContent = questions[j].answer3;
+        displayedOption4.textContent = questions[j].answer4;
+        correctAnswer = questions[j].correct_answer;
+    } else {
+        // once all questions are answered - stop timer 
+        clearInterval(interval);
+        // update display to submitting score form
+        showScoreSubmission()
+        // reset variable used to loop (cleared for any future quizzes)
+        j = 0;
     }
 }
 
 // function executed when user clicks on an answer button ** MUST UPDATE AS IT INCLUDES ANOTHER BUTTON RIGHT NOW
 function clickQuestions() {
+    // if they click on an answer button
     if (event.target.matches("button")) {
+        // increase variable j, used to loop through the question objects in array
         j = j + 1;
-        console.log(j);
+        // run funtion to check if question correct
         markQuestions();
+        // function populateQ will move to next question object in array 
         populateQuestions();
     }
+    // if they click anywhere else nothing happens 
 }
 
 // compare if buttton click matches the right answer 
 function markQuestions() {
-
+    // if the correct answer is not clicked
     if (event.target.textContent != correctAnswer) {
+        // run wrong answer function
         wrongAnswer()
-    }
-    console.log(event.target.textContent);
-    console.log(correctAnswer);
+    } else {}
+    // if correct answer is clicked, continue - no change to timer
 }
 
 function wrongAnswer() {
+    // create new variable defined by currented displayed time less 15 seconds 
     var newScore = currentTime.textContent - 15;
-    console.log(newScore);
+    // update display time to reflect new score
     displayTime = newScore;
+    // update display 
     renderTime();
 }
 
@@ -245,7 +251,6 @@ function renderInfo() {
     }
     showHS();
 }
-
 
 // function to clear local storage, clear high score array and render to clear list of high scores 
 function emptyHS() {
