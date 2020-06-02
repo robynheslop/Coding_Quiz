@@ -38,9 +38,13 @@ var answer = document.querySelector("answerOptions");
 // empty variable to loop through in question display
 var j = 0;
 
+var correctAnswer = "";
+
 var highscores = [];
 
-var startTime = 15
+var displayTime = "";
+
+var startTime = 75;
 
 var questions = [
     {
@@ -133,33 +137,40 @@ function showScoreSubmission() {
     quizTimer.style.visibility = "visible";
 }
 
+function renderTime() {
+    currentTime.textContent = displayTime;
+}
+
 // display 75 seconds (utilised when quiz starts)
 function setTime() {
-    currentTime.textContent = startTime;
+    displayTime = startTime;
+    renderTime();
 }
 
 // display 0 seconds in timer
 function clearTime() {
-    currentTime.textContent = 0
+    displayTime = 0;
+    renderTime();
 }
 
-
-
+// function to countdown timer each second and update display 
 function startTimer() {
+    // create function to count down 
     interval = setInterval(function() {
+        // new variable to remove 1 from the current time displayed
     var now = currentTime.textContent - 1;
-    currentTime.textContent = now;
+    // update current time display
+    displayTime = now;
+    renderTime();
+    // if timer reaches 0 stop countdown 
     if (now == 0) {
         clearInterval(interval);
+        renderTime();
     }
     }, 1000);
     
+    
 }
-
-
-
-
-
 
 // function to pass through the questions 
 function populateQuestions() {
@@ -171,9 +182,11 @@ function populateQuestions() {
             displayedOption2.textContent = questions[j].answer2;
             displayedOption3.textContent = questions[j].answer3;
             displayedOption4.textContent = questions[j].answer4;
+            correctAnswer = questions[j].correct_answer;
         } else {
-            // update display and move to submitting scores
+            // once all questions are answered - stop timer 
             clearInterval(interval);
+            // update display to submitting score
             showScoreSubmission()
             j = 0;
             i = 0;
@@ -194,6 +207,18 @@ function clickQuestions() {
 // compare if buttton click matches the right answer 
 function markQuestions() {
 
+    if (event.target.textContent != correctAnswer) {
+        wrongAnswer()
+    }
+    console.log(event.target.textContent);
+    console.log(correctAnswer);
+}
+
+function wrongAnswer() {
+    var newScore = currentTime.textContent - 15;
+    console.log(newScore);
+    displayTime = newScore;
+    renderTime();
 }
 
 // function to store submitted initials and scores in local storage
