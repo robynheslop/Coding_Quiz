@@ -4,7 +4,8 @@ var startButton = document.querySelector("#start-button");
 var exitQuizButton = document.querySelector("#go-to-HS");
 // create variable for button on HS screen to return home
 var returnHomeButton = document.querySelector("#go-back-to-home");
-
+// variable representing timer displayed in top rh corner
+var quizTimer = document.querySelector("#quiz-timer");
 // create variables to control display of spans 
 var displayOpeningPage = document.querySelector("#opening-page");
 var displayQuestions = document.querySelector("#questions-displayed");
@@ -90,6 +91,7 @@ function showQuestions() {
     displayQuestions.style.display = "block";
     displayHighScores.style.display = "none";
     linkToHighScoresButton.style.visibility = "visible";
+    quizTimer.style.visibility = "visible";
     populateQuestions()
 }
 
@@ -101,6 +103,7 @@ function showHS() {
     displayQuestions.style.display = "none";
     displayHighScores.style.display = "block";
     linkToHighScoresButton.style.visibility = "hidden";
+    quizTimer.style.visibility = "hidden";
 }
 
 // function to display homepage span
@@ -110,6 +113,7 @@ function showHome() {
     displayQuestions.style.display = "none";
     displayHighScores.style.display = "none";
     linkToHighScoresButton.style.visibility = "visible";
+    quizTimer.style.visibility = "visible";
 }
 
 // function to display score submission
@@ -118,7 +122,8 @@ function showScoreSubmission() {
     displayQuestions.style.display = "none";
     displayHighScores.style.display = "none";
     enterHS.style.display = "block";
-    linkToHighScoresButton.style.visibility = "hidden";
+    linkToHighScoresButton.style.visibility = "visible";
+    quizTimer.style.visibility = "visible";
 }
 
 // function to pass through the questions 
