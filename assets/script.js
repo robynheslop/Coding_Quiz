@@ -40,7 +40,7 @@ var j = 0;
 
 var highscores = [];
 
-var startTime = 75
+var startTime = 15
 
 var questions = [
     {
@@ -120,7 +120,7 @@ function showHome() {
     displayHighScores.style.display = "none";
     linkToHighScoresButton.style.visibility = "visible";
     quizTimer.style.visibility = "visible";
-    clearTimer()
+    clearTime()
 }
 
 // function to display score submission
@@ -133,26 +133,30 @@ function showScoreSubmission() {
     quizTimer.style.visibility = "visible";
 }
 
-
+// display 75 seconds (utilised when quiz starts)
 function setTime() {
     currentTime.textContent = startTime;
-    
+}
+
+// display 0 seconds in timer
+function clearTime() {
+    currentTime.textContent = 0
 }
 
 
 
 function startTimer() {
+    interval = setInterval(function() {
+    var now = currentTime.textContent - 1;
+    currentTime.textContent = now;
+    if (now == 0) {
+        clearInterval(interval);
+    }
+    }, 1000);
     
-    // var countdown = cur
-    // interval = setInterval(function() {
-    // secondsPassing = 0
-    // }, 1000);
 }
 
 
-function clearTimer() {
-    currentTime.textContent = 0
-}
 
 
 
@@ -169,6 +173,7 @@ function populateQuestions() {
             displayedOption4.textContent = questions[j].answer4;
         } else {
             // update display and move to submitting scores
+            clearInterval(interval);
             showScoreSubmission()
             j = 0;
             i = 0;
@@ -222,15 +227,13 @@ function emptyHS() {
     localStorage.clear();
     highscores = [];
     renderInfo();
-    } 
+} 
 
 
 startButton.addEventListener("click", showQuestions);
 exitQuizButton.addEventListener("click", showHS);
 returnHomeButton.addEventListener("click", showHome);
 linkToHighScoresButton.addEventListener("click", showHS);
-
-
 displayQuestions.addEventListener("click", clickQuestions);
 submitDataButton.addEventListener("click", function(event) {
     event.preventDefault();
@@ -245,6 +248,4 @@ submitDataButton.addEventListener("click", function(event) {
     storeInfo();
     renderInfo();
 });
-
-
 clearHighScoresButton.addEventListener("click", emptyHS);
