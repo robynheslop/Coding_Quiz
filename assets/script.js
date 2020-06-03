@@ -82,7 +82,7 @@ var questions = [
         answer2: "alert('Hello World')",
         answer3: "msgBox('Hello World')",
         answer4: "msg('Hello World')",
-        correct_answer: "<script></script>",
+        correct_answer: "alert('Hello World')",
     },
     {
         question: "How to write an IF statement for executing some code if 'i' is NOT equal to 5?",
