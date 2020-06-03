@@ -2,6 +2,9 @@ body {
     font-family: 'Quicksand', sans-serif;
 }
 
+.container-sm {
+    max-width: 500px;
+}
 
 h1 {
     font-family: 'Architects Daughter', cursive;
