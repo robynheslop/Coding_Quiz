@@ -6,6 +6,11 @@ var exitQuizButton = document.querySelector("#go-to-HS");
 var returnHomeButton = document.querySelector("#go-back-to-home");
 // variable representing timer displayed in top rh corner
 var quizTimer = document.querySelector("#quiz-timer");
+
+// access to parent div for displaying "correct" or "wrong" after answers
+var borderAboveLastResult = document.querySelector("#previous-result");
+
+
 // create variables to control display of spans 
 var displayOpeningPage = document.querySelector("#opening-page");
 var displayQuestions = document.querySelector("#questions-displayed");
@@ -20,7 +25,10 @@ var clearHighScoresButton = document.querySelector("#clear-high-scores");
 // 
 var submitDataButton = document.querySelector("#submitInitials");
 
+// create variable to access the display for "previous result" (correct or wrong)
+var previousResult = document.querySelector("#lastResult");
 
+// access to value displayed for countdown
 var currentTime = document.querySelector("#current-time");
 
 //create variable for submiting data button 
@@ -103,6 +111,7 @@ function showQuestions() {
     displayOpeningPage.style.display = "none";
     displayQuestions.style.display = "block";
     displayHighScores.style.display = "none";
+    borderAboveLastResult.style.visibility = "hidden";
     linkToHighScoresButton.style.visibility = "visible";
     quizTimer.style.visibility = "visible";
     setTime();
@@ -172,9 +181,10 @@ function startTimer() {
     if (now == 0) {
         // stop timer
         clearInterval(interval);
+        // bring the time displayed as final question answered to variable "final time"
         finalTime = displayTime;
-        console.log(displayTime);
-        renderTime();
+        // stop displaying questions and display scoreboard submission form
+        showScoreSubmission()
     }
     }, 1000);
     
@@ -195,17 +205,15 @@ function populateQuestions() {
     } else {
         // once all questions are answered - stop timer 
         clearInterval(interval); 
-
+        // bring the time displayed as final question answered to variable "final time"
         finalTime = displayTime;
-        console.log(displayTime);
-        // update display to submitting score form
         showScoreSubmission()
         // reset variable used to loop (cleared for any future quizzes)
         j = 0;
     }
 }
 
-// function executed when user clicks on an answer button ** MUST UPDATE AS IT INCLUDES ANOTHER BUTTON RIGHT NOW
+// function executed when user clicks on an answer button ** MUST UPDATE AS IT INCLUDES ANOTHER BUTTON RIGHT NOW *exit quiz button*
 function clickQuestions() {
     // if they click on an answer button
     if (event.target.matches("button")) {
@@ -223,9 +231,16 @@ function clickQuestions() {
 function markQuestions() {
     // if the correct answer is not clicked
     if (event.target.textContent != correctAnswer) {
+        // 
+        borderAboveLastResult.style.visibility = "visible";
+        previousResult.textContent = "Wrong!";
         // run wrong answer function
-        wrongAnswer()
-    } else {}
+        wrongAnswer();
+    } else {
+        borderAboveLastResult.style.visibility = "visible";
+        previousResult.textContent = "Correct!";
+    }
+        
     // if correct answer is clicked, continue - no change to timer
 }
 
@@ -272,7 +287,7 @@ function renderInfo() {
         // access appropriate objects in variable and constuct display text to show data
         var publishName = storedHighScore[k].name;
         var publishScore = storedHighScore[k].score;
-        var publishingTExt = (publishScore + " - " + publishName);
+        var publishingTExt = (publishName + " - -  " + publishScore);
         // set the text element of list to publishing text var
         li.textContent = publishingTExt;
         // set an attribute to the list item equal to current k value
@@ -290,12 +305,17 @@ function emptyHS() {
     renderInfo();
 } 
 
-
+// event listened to start button
 startButton.addEventListener("click", showQuestions);
+// event listener to exit quiz button 
 exitQuizButton.addEventListener("click", showHS);
+// event listener to return home button
 returnHomeButton.addEventListener("click", showHome);
+// event listener to the persistent highscore button
 linkToHighScoresButton.addEventListener("click", showHS);
+// add event listener to any clicks on displayed questions
 displayQuestions.addEventListener("click", clickQuestions);
+// add event listener to submit button for highscore form
 submitDataButton.addEventListener("click", function(event) {
     event.preventDefault();
     // create variable for submitted initials 
@@ -328,4 +348,5 @@ submitDataButton.addEventListener("click", function(event) {
     storeInfo();
     renderInfo();
 });
+// add event listener to clear high score button
 clearHighScoresButton.addEventListener("click", emptyHS);
