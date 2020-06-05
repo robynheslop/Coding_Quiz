@@ -61,42 +61,42 @@ var finalTime = "";
 var questions = [
     {
         question: "Commonly used data types do NOT include:",
-        answer1: "Strings",
-        answer2: "Booleans",
-        answer3: "Alerts",
-        answer4: "Numbers",
+        A1: "Strings",
+        A2: "Booleans",
+        A3: "Alerts",
+        A4: "Numbers",
         correct_answer: "Alerts",
     },
     {
         question: "Arrays in JavaScript can be used to store ____.",
-        answer1: "numbers and strings.",
-        answer2: "other arrays.",
-        answer3: "booleans.",
-        answer4: "all of the above",
+        A1: "numbers and strings.",
+        A2: "other arrays.",
+        A3: "booleans.",
+        A4: "all of the above",
         correct_answer: "all of the above",
     },
     {
         question: "String values must be enclosed within ____ when being assigned to variables.",
-        answer1: "commas",
-        answer2: "curly brackets",
-        answer3: "quotes",
-        answer4: "parentheses",
+        A1: "commas",
+        A2: "curly brackets",
+        A3: "quotes",
+        A4: "parentheses",
         correct_answer: "quotes",
     },
     {
         question: "A very useful tool used during development and debugging for printing content to the debugger is:",
-        answer1: "JavaScript",
-        answer2: "terminal/bash",
-        answer3: "for loops",
-        answer4: "console.log",
+        A1: "JavaScript",
+        A2: "terminal/bash",
+        A3: "for loops",
+        A4: "console.log",
         correct_answer: "console.log",
     },
     {
         question: "The condition in an if/else statement is enclosed withing ____.",
-        answer1: "parentheses",
-        answer2: "curly brackets",
-        answer3: "quotes",
-        answer4: "square brackets",
+        A1: "parentheses",
+        A2: "curly brackets",
+        A3: "quotes",
+        A4: "square brackets",
         correct_answer: "parentheses",
     }
 ];
@@ -203,16 +203,46 @@ function startTimer() {
     }, 1000);
 }
 
+
+
+    
 // function to pass through the questions 
 function populateQuestions() {
     // variable j used to loop through objects within array
     if (j < questions.length) {
-        // update display on buttons - reflect the contents of objects in questions array
+        // define function "shuffle array"
+        function shuffleArray() {
+            // array of positions available for answers
+            
+            // variable as long as array length
+            var counter = array.length;
+        
+            // While there are elements in the array
+            while (counter > 0) {
+                // create var index and assign a math random value (within counter var limits)
+                index = Math.floor(Math.random() * counter);
+                // reduce counter by 1
+                counter--;
+                // FIND OUT WHAT THIS DOES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                var temp = array[counter];
+                array[counter] = array[index];
+                array[index] = temp;
+            }
+        
+            return array;
+        }
+        // define array as the possible answers for current question (j)""
+        var array = [questions[j].A1, questions[j].A2, questions[j].A3, questions[j].A4]
+        // shuffle the array 
+        shuffleArray(array);
+        // update display to show current question
         displayedQuestion.textContent = questions[j].question;
-        displayedOption1.textContent = questions[j].answer1;
-        displayedOption2.textContent = questions[j].answer2;
-        displayedOption3.textContent = questions[j].answer3;
-        displayedOption4.textContent = questions[j].answer4;
+        // update text content of each button to reflected the elements of SHUFFLED array
+        displayedOption1.textContent = array[0]
+        displayedOption2.textContent = array[1]
+        displayedOption3.textContent = array[2]
+        displayedOption4.textContent = array[3]
+
         correctAnswer = questions[j].correct_answer;
     } else {
         // once all questions are answered - stop timer 
@@ -346,29 +376,21 @@ submitDataButton.addEventListener("click", function (event) {
     var HSText = submittedInitials.value.trim();
     // create variable for score from final time
     var score = finalTime;
-
     var q = 0
-    // if no initials entered, ________________________________
+    // if no initials entered, stop
     if (HSText === "") {
         return;
     }
-
-
     // create object to store name and score
     var highscoresObject = {};
     highscoresObject.name = HSText;
     highscoresObject.score = score;
-
-    console.log(highscoresObject)
-
     // push the object onto array called highscores
     highscores.push(highscoresObject);
 
-    // empty initials for any future submissions
+    // empty variables holding initials and score for any future submissions
     HSText.value = "";
     submittedInitials.value = "";
-    // empty form after data saved
-
     storeInfo();
     renderInfo();
 });
