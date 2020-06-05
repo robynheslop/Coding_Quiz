@@ -1,30 +1,41 @@
+// Large buttons
 // create variables to start quiz button
 var startButton = document.querySelector("#start-button");
 // create variable to EXIT QUIZ button and move to highscores
 var exitQuizButton = document.querySelector("#go-to-HS");
 // create variable for button on HS screen to return home
-var returnHomeButton = document.querySelector("#go-back-to-home");
-// variable representing timer displayed in top rh corner
-var quizTimer = document.querySelector("#quiz-timer");
-// access to parent div for displaying "correct" or "wrong" after answers
-var borderAboveLastResult = document.querySelector("#previous-result");
-// create variables to control display of spans 
-var displayOpeningPage = document.querySelector("#opening-page");
-var displayQuestions = document.querySelector("#questions-displayed");
-// link to score board 
-var displayHighScores = document.querySelector("#highscores-displayed");
-// link to high score submission
-var enterHS = document.querySelector("#enter-HS-displayed");
-// create variable to persistant HS button outside contianer
-var linkToHighScoresButton = document.querySelector("#persistant-link-to-HS");
+var returnHomeButton = document.querySelector("#go-back-to-home")
 // create variable linking to button to clear high scores
 var clearHighScoresButton = document.querySelector("#clear-high-scores");
-// create link to the div with id "answer options" - encompassing buttons to click answer to q
+
+// top row elements
+// create variable to persistant HS button outside contianer
+var linkToHighScoresButton = document.querySelector("#persistant-link-to-HS");
+// variable representing timer displayed in top rh corner
+var quizTimer = document.querySelector("#quiz-timer");
+
+// Display blocks 
+// link to "wrong/correct" display div"
+var borderAboveLastResult = document.querySelector("#previous-result");
+// link to home page div
+var displayOpeningPage = document.querySelector("#opening-page");
+// link to question display div
+var displayQuestions = document.querySelector("#questions-displayed");
+// link to high score list div
+var displayHighScores = document.querySelector("#highscores-displayed");
+// link to high score submission div
+var enterHS = document.querySelector("#enter-HS-displayed");
+
+// Changing elements 
+
+// create link to "answer options" - div encompassing buttons to click answer to q
 var answerButtonTargets = document.querySelector("#answer-buttons");
-// 
+
+// submit data button
 var submitDataButton = document.querySelector("#submitInitials");
+
 // create variable to access the display for "previous result" (correct or wrong)
-var previousResult = document.querySelector("#lastResult");
+var previousResultText = document.querySelector("#lastResult");
 // access to value displayed for countdown
 var currentTime = document.querySelector("#current-time");
 //create variable for submiting data button 
@@ -40,14 +51,12 @@ var displayedOption4 = document.querySelector("#option4");
 
 // empty variable to loop through in question display
 var j = 0;
-// 
+// empty variable to hold the current correct answer
 var correctAnswer = "";
 // hgih scores start off empty
 var highscores = [];
 // create var display time - initially empty
 var displayTime = "";
-// starting time for quiz gives user 75 seconds
-var startTime = 75;
 // empty variable to record time when timer stops
 var finalTime = "";
 // array of objects that hold the questions, answers and correct answer
@@ -116,13 +125,14 @@ function showQuestions() {
 // function to display highscore board span
 function showHS() {
     event.preventDefault();
-    // organise displays 
+    // no display
     enterHS.style.display = "none";
     displayOpeningPage.style.display = "none";
     displayQuestions.style.display = "none";
-    displayHighScores.style.display = "block";
     linkToHighScoresButton.style.display = "none";
     quizTimer.style.display = "none";
+    // block display
+    displayHighScores.style.display = "block";
     // ensure no timer is running (i)
     clearInterval(interval);
     // empty variables from last quiz (accessed if user click exit quiz or view HS)
@@ -132,10 +142,11 @@ function showHS() {
 // function to display homepage span
 function showHome() {
     event.preventDefault();
-    // organise displays 
-    displayOpeningPage.style.display = "block";
+    // no display
     displayQuestions.style.display = "none";
     displayHighScores.style.display = "none";
+    // block display
+    displayOpeningPage.style.display = "block";
     linkToHighScoresButton.style.display = "block";
     quizTimer.style.display = "block";
     // reset timer to 0 seconds
@@ -144,9 +155,11 @@ function showHome() {
 
 // function to display score submission
 function showScoreSubmission() {
+    // no display
     displayOpeningPage.style.display = "none";
     displayQuestions.style.display = "none";
     displayHighScores.style.display = "none";
+    // block display
     enterHS.style.display = "block";
     linkToHighScoresButton.style.display = "block";
     quizTimer.style.display = "block";
@@ -159,7 +172,7 @@ function renderTime() {
 
 // display 75 seconds (utilised when quiz starts)
 function setTime() {
-    displayTime = startTime;
+    displayTime = 75;
     renderTime();
 }
 
@@ -235,12 +248,12 @@ function markQuestions() {
     if (event.target.textContent != correctAnswer) {
         // 
         borderAboveLastResult.style.visibility = "visible";
-        previousResult.textContent = "Wrong!";
+        previousResultText.textContent = "Wrong!";
         // run wrong answer function
         wrongAnswer();
     } else {
         borderAboveLastResult.style.visibility = "visible";
-        previousResult.textContent = "Correct!";
+        previousResultText.textContent = "Correct!";
     }
 
     // if correct answer is clicked, continue - no change to timer
@@ -276,7 +289,7 @@ function endOfQuiz() {
     // empty j so future quizzes start with 1st question
     j = 0;
     // reset display of "wrong/correct" about previous result
-    previousResult.textContent = "";
+    previousResultText.textContent = "";
 }
 
 // function to store submitted initials and scores in local storage
@@ -286,9 +299,8 @@ function storeInfo() {
 
 // function to render information from local storage and pin in to high score list
 function renderInfo() {
-    x = 0;
+    // clear list each time (to reflect any higher scores) 
     highScoreList.innerHTML = "";
-
     // accessing string stored in local storage, turning it back into array
     var storedHighScore = JSON.parse(localStorage.getItem("highscores"));
     // sort array by the scores (high score becomes obj 0, 2nd highests obj 1)
@@ -310,6 +322,7 @@ function renderInfo() {
         // append li item to ordered list of highscores 
         highScoreList.appendChild(li);
     }
+    // display highscore page
     showHS();
 }
 
