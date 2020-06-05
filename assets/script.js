@@ -340,7 +340,7 @@ function renderInfo() {
         // access appropriate objects in variable and constuct display text to show data
         var publishName = storedHighScore[k].name;
         var publishScore = storedHighScore[k].score;
-        var publishingTExt = (publishName + " - -  " + publishScore);
+        var publishingTExt = (publishName + " - " + publishScore);
         // set the text element of list to publishing text var
         li.textContent = publishingTExt;
         // set an attribute to the list item equal to current k value
