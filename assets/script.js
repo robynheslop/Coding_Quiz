@@ -98,9 +98,11 @@ var questions = [
 // function to display question span
 function showQuestions() {
     event.preventDefault();
+    // no display
     displayOpeningPage.style.display = "none";
-    displayQuestions.style.display = "block";
     displayHighScores.style.display = "none";
+    // block display
+    displayQuestions.style.display = "block";
     borderAboveLastResult.style.display = "block";
     linkToHighScoresButton.style.display = "block";
     quizTimer.style.display = "block";
