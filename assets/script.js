@@ -6,11 +6,8 @@ var exitQuizButton = document.querySelector("#go-to-HS");
 var returnHomeButton = document.querySelector("#go-back-to-home");
 // variable representing timer displayed in top rh corner
 var quizTimer = document.querySelector("#quiz-timer");
-
 // access to parent div for displaying "correct" or "wrong" after answers
 var borderAboveLastResult = document.querySelector("#previous-result");
-
-
 // create variables to control display of spans 
 var displayOpeningPage = document.querySelector("#opening-page");
 var displayQuestions = document.querySelector("#questions-displayed");
@@ -24,13 +21,10 @@ var linkToHighScoresButton = document.querySelector("#persistant-link-to-HS");
 var clearHighScoresButton = document.querySelector("#clear-high-scores");
 // 
 var submitDataButton = document.querySelector("#submitInitials");
-
 // create variable to access the display for "previous result" (correct or wrong)
 var previousResult = document.querySelector("#lastResult");
-
 // access to value displayed for countdown
 var currentTime = document.querySelector("#current-time");
-
 //create variable for submiting data button 
 var submittedInitials = document.querySelector("#initials");
 //link to submiting data button 
@@ -44,21 +38,17 @@ var displayedOption4 = document.querySelector("#option4");
 
 // empty variable to loop through in question display
 var j = 0;
-
 // 
 var correctAnswer = "";
-
 // hgih scores start off empty
 var highscores = [];
-
 // create var display time - initially empty
 var displayTime = "";
-
 // starting time for quiz gives user 75 seconds
 var startTime = 75;
-
+// empty variable to record time when timer stops
 var finalTime = "";
-
+// array of objects that hold the questions, answers and correct answer
 var questions = [
     {
         question: "Commonly used data types do NOT include:",
@@ -111,9 +101,9 @@ function showQuestions() {
     displayOpeningPage.style.display = "none";
     displayQuestions.style.display = "block";
     displayHighScores.style.display = "none";
-    borderAboveLastResult.style.visibility = "hidden";
-    linkToHighScoresButton.style.visibility = "visible";
-    quizTimer.style.visibility = "visible";
+    borderAboveLastResult.style.display = "block";
+    linkToHighScoresButton.style.display = "block";
+    quizTimer.style.display = "block";
     setTime();
     startTimer();
     populateQuestions();
@@ -126,8 +116,8 @@ function showHS() {
     displayOpeningPage.style.display = "none";
     displayQuestions.style.display = "none";
     displayHighScores.style.display = "block";
-    linkToHighScoresButton.style.visibility = "hidden";
-    quizTimer.style.visibility = "hidden";
+    linkToHighScoresButton.style.display = "none";
+    quizTimer.style.display = "none";
 }
 
 // function to display homepage span
@@ -136,8 +126,8 @@ function showHome() {
     displayOpeningPage.style.display = "block";
     displayQuestions.style.display = "none";
     displayHighScores.style.display = "none";
-    linkToHighScoresButton.style.visibility = "visible";
-    quizTimer.style.visibility = "visible";
+    linkToHighScoresButton.style.display = "block";
+    quizTimer.style.display = "block";
     clearTime()
 }
 
@@ -147,8 +137,8 @@ function showScoreSubmission() {
     displayQuestions.style.display = "none";
     displayHighScores.style.display = "none";
     enterHS.style.display = "block";
-    linkToHighScoresButton.style.visibility = "visible";
-    quizTimer.style.visibility = "visible";
+    linkToHighScoresButton.style.display = "block";
+    quizTimer.style.display = "block";
 }
 
 // function to update display of time
