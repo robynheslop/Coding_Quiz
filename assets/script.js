@@ -19,6 +19,8 @@ var enterHS = document.querySelector("#enter-HS-displayed");
 var linkToHighScoresButton = document.querySelector("#persistant-link-to-HS");
 // create variable linking to button to clear high scores
 var clearHighScoresButton = document.querySelector("#clear-high-scores");
+// create link to the div with id "answer options" - encompassing buttons to click answer to q
+var answerButtonTargets = document.querySelector("#answer-buttons");
 // 
 var submitDataButton = document.querySelector("#submitInitials");
 // create variable to access the display for "previous result" (correct or wrong)
@@ -45,7 +47,7 @@ var highscores = [];
 // create var display time - initially empty
 var displayTime = "";
 // starting time for quiz gives user 75 seconds
-var startTime = 15;
+var startTime = 75;
 // empty variable to record time when timer stops
 var finalTime = "";
 // array of objects that hold the questions, answers and correct answer
@@ -120,6 +122,8 @@ function showHS() {
     displayHighScores.style.display = "block";
     linkToHighScoresButton.style.display = "none";
     quizTimer.style.display = "none";
+    endOfQuiz()
+
 }
 
 // function to display homepage span
@@ -177,9 +181,7 @@ function startTimer() {
             finalTime = displayTime;
             // stop displaying questions and display scoreboard submission form
             showScoreSubmission()
-            // reset variable used to loop (cleared for any future quizzes)
-            j = 0;
-            // previousResult.textContent = "";
+            endOfQuiz()
         }
     }, 1000);
 
@@ -203,15 +205,13 @@ function populateQuestions() {
         // bring the time displayed as final question answered to variable "final time"
         finalTime = displayTime;
         showScoreSubmission()
-        // reset variable used to loop (cleared for any future quizzes)
-        j = 0;
         //reset variable displaying if previous question was right/wrong
-
+        endOfQuiz()
 
     }
 }
 
-// function executed when user clicks on an answer button ** MUST UPDATE AS IT INCLUDES ANOTHER BUTTON RIGHT NOW *exit quiz button*
+// function executed when user clicks on an answer button
 function clickQuestions() {
     // if they click on an answer button
     if (event.target.matches("button")) {
@@ -242,6 +242,7 @@ function markQuestions() {
     // if correct answer is clicked, continue - no change to timer
 }
 
+// function if clicked answer is not correct answer 
 function wrongAnswer() {
     // if user has more than 15 seconds remaining 
     if (currentTime.textContent > 15) {
@@ -260,13 +261,24 @@ function wrongAnswer() {
         clearInterval(interval);
         // bring the time displayed as final question answered to variable "final time"
         finalTime = displayTime;
-        showScoreSubmission()
-        // reset variable used to loop (cleared for any future quizzes)
-        j = 0;
-        //reset variable displaying if previous question was right/wrong
+        showScoreSubmission();
+        endOfQuiz()
     }
 
 
+}
+
+
+function clearQuestionData() {
+    
+}
+
+// function to clear stored data relating to any previous responses
+function endOfQuiz() {
+    // stop timer
+    clearInterval(interval);
+    // empty j so future quizzes start with 1st question
+    j = 0;
 }
 
 // function to store submitted initials and scores in local storage
@@ -320,7 +332,7 @@ returnHomeButton.addEventListener("click", showHome);
 // event listener to the persistent highscore button
 linkToHighScoresButton.addEventListener("click", showHS);
 // add event listener to any clicks on displayed questions
-displayQuestions.addEventListener("click", clickQuestions);
+answerButtonTargets.addEventListener("click", clickQuestions);
 // add event listener to submit button for highscore form
 submitDataButton.addEventListener("click", function (event) {
     event.preventDefault();
