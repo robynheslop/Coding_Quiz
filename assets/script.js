@@ -45,7 +45,7 @@ var highscores = [];
 // create var display time - initially empty
 var displayTime = "";
 // starting time for quiz gives user 75 seconds
-var startTime = 75;
+var startTime = 15;
 // empty variable to record time when timer stops
 var finalTime = "";
 // array of objects that hold the questions, answers and correct answer
@@ -161,24 +161,27 @@ function clearTime() {
 // function to countdown timer each second and update display 
 function startTimer() {
     // create function to count down (runs every 1000 milliseconds)
-    interval = setInterval(function() {
+    interval = setInterval(function () {
         // new variable to remove 1 from the current time displayed
-    var now = currentTime.textContent - 1;
-    // update current time display
-    displayTime = now;
-    renderTime();
-    // if timer reaches 0 stop countdown 
-    if (now == 0) {
-        // stop timer
-        clearInterval(interval);
-        // bring the time displayed as final question answered to variable "final time"
-        finalTime = displayTime;
-        // stop displaying questions and display scoreboard submission form
-        showScoreSubmission()
-    }
+        var now = currentTime.textContent - 1;
+        // update current time display
+        displayTime = now;
+        renderTime();
+        // if timer reaches 0 stop countdown 
+        if (now == 0) {
+            // stop timer
+            clearInterval(interval);
+            // bring the time displayed as final question answered to variable "final time"
+            finalTime = displayTime;
+            // stop displaying questions and display scoreboard submission form
+            showScoreSubmission()
+            // reset variable used to loop (cleared for any future quizzes)
+            j = 0;
+            // previousResult.textContent = "";
+        }
     }, 1000);
-    
-    
+
+
 }
 
 // function to pass through the questions 
@@ -194,12 +197,15 @@ function populateQuestions() {
         correctAnswer = questions[j].correct_answer;
     } else {
         // once all questions are answered - stop timer 
-        clearInterval(interval); 
+        clearInterval(interval);
         // bring the time displayed as final question answered to variable "final time"
         finalTime = displayTime;
         showScoreSubmission()
         // reset variable used to loop (cleared for any future quizzes)
         j = 0;
+        //reset variable displaying if previous question was right/wrong
+
+
     }
 }
 
@@ -230,7 +236,7 @@ function markQuestions() {
         borderAboveLastResult.style.visibility = "visible";
         previousResult.textContent = "Correct!";
     }
-        
+
     // if correct answer is clicked, continue - no change to timer
 }
 
@@ -248,9 +254,17 @@ function wrongAnswer() {
         displayTime = 0
         // update display
         renderTime();
+        // stop timer 
+        clearInterval(interval);
+        // bring the time displayed as final question answered to variable "final time"
+        finalTime = displayTime;
+        showScoreSubmission()
+        // reset variable used to loop (cleared for any future quizzes)
+        j = 0;
+        //reset variable displaying if previous question was right/wrong
     }
-    
-    
+
+
 }
 
 // function to store submitted initials and scores in local storage
@@ -267,7 +281,7 @@ function renderInfo() {
     // accessing string stored in local storage, turning it back into array
     var storedHighScore = JSON.parse(localStorage.getItem("highscores"));
     // sort array by the scores (high score becomes obj 0, 2nd highests obj 1)
-    storedHighScore.sort(function(a, b) {
+    storedHighScore.sort(function (a, b) {
         return b.score - a.score;
     });
     // create for loop the length of high score array
@@ -293,7 +307,7 @@ function emptyHS() {
     localStorage.clear();
     highscores = [];
     renderInfo();
-} 
+}
 
 // event listened to start button
 startButton.addEventListener("click", showQuestions);
@@ -306,7 +320,7 @@ linkToHighScoresButton.addEventListener("click", showHS);
 // add event listener to any clicks on displayed questions
 displayQuestions.addEventListener("click", clickQuestions);
 // add event listener to submit button for highscore form
-submitDataButton.addEventListener("click", function(event) {
+submitDataButton.addEventListener("click", function (event) {
     event.preventDefault();
     // create variable for submitted initials 
     var HSText = submittedInitials.value.trim();
@@ -317,8 +331,8 @@ submitDataButton.addEventListener("click", function(event) {
     // if no initials entered, ________________________________
     if (HSText === "") {
         return;
-    } 
-    
+    }
+
 
     // create object to store name and score
     var highscoresObject = {};
@@ -332,9 +346,9 @@ submitDataButton.addEventListener("click", function(event) {
 
     // empty initials for any future submissions
     HSText.value = "";
-    submittedInitials.value= "";
+    submittedInitials.value = "";
     // empty form after data saved
-    
+
     storeInfo();
     renderInfo();
 });
