@@ -116,24 +116,29 @@ function showQuestions() {
 // function to display highscore board span
 function showHS() {
     event.preventDefault();
+    // organise displays 
     enterHS.style.display = "none";
     displayOpeningPage.style.display = "none";
     displayQuestions.style.display = "none";
     displayHighScores.style.display = "block";
     linkToHighScoresButton.style.display = "none";
     quizTimer.style.display = "none";
+    // ensure no timer is running (i)
+    clearInterval(interval);
+    // empty variables from last quiz (accessed if user click exit quiz or view HS)
     endOfQuiz()
-
 }
 
 // function to display homepage span
 function showHome() {
     event.preventDefault();
+    // organise displays 
     displayOpeningPage.style.display = "block";
     displayQuestions.style.display = "none";
     displayHighScores.style.display = "none";
     linkToHighScoresButton.style.display = "block";
     quizTimer.style.display = "block";
+    // reset timer to 0 seconds
     clearTime()
 }
 
@@ -181,11 +186,10 @@ function startTimer() {
             finalTime = displayTime;
             // stop displaying questions and display scoreboard submission form
             showScoreSubmission()
+            // empty variables from last quiz
             endOfQuiz()
         }
     }, 1000);
-
-
 }
 
 // function to pass through the questions 
@@ -205,7 +209,7 @@ function populateQuestions() {
         // bring the time displayed as final question answered to variable "final time"
         finalTime = displayTime;
         showScoreSubmission()
-        //reset variable displaying if previous question was right/wrong
+        // empty variables from last quiz
         endOfQuiz()
 
     }
@@ -262,29 +266,22 @@ function wrongAnswer() {
         // bring the time displayed as final question answered to variable "final time"
         finalTime = displayTime;
         showScoreSubmission();
+        // empty variables from last quiz
         endOfQuiz()
     }
-
-
-}
-
-
-function clearQuestionData() {
-    
 }
 
 // function to clear stored data relating to any previous responses
 function endOfQuiz() {
-    // stop timer
-    clearInterval(interval);
     // empty j so future quizzes start with 1st question
     j = 0;
+    // reset display of "wrong/correct" about previous result
+    previousResult.textContent = "";
 }
 
 // function to store submitted initials and scores in local storage
 function storeInfo() {
     localStorage.setItem("highscores", JSON.stringify(highscores));
-
 }
 
 // function to render information from local storage and pin in to high score list
