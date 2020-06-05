@@ -36,10 +36,10 @@
         <!-- first row - initialising timer and high score positions -->
         <div class="row">
             <div class="col-sm-12">
-
+                <!-- button pinned in top LH corner to access highscores -->
                 <button type="button" class="btn btn-outline-primary btn-sm mx-auto" id="persistant-link-to-HS">View
                     Highscores</button>
-           
+                 <!-- display timer count here -->
                 <div id="quiz-timer">
                     <div id="seconds">Time: <span id="current-time">0</span></div>
                 </div>
@@ -55,9 +55,11 @@
         <div class="row">
             
             <div class="col-sm-12 text">
-                <!-- Displayed before quiz starts -->
+                <!-- opening page - about quiz -->
                 <span id="opening-page">
+                    <!-- span heading -->
                     <h1>Coding Quiz</h1>
+
                     <p>Answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalise you final score/time by 15!</p>
                     <!-- button to commence quiz -->
                     <button type="button" class="btn btn-primary btn-lg mx-auto large-button"
@@ -66,10 +68,12 @@
 
                 <!-- quiz -->
                 <span id="questions-displayed" style="display:none">
-
+                    <!-- span heading -->
                     <h1>Questions</h1>
 
+                    <!-- display question here -->
                     <h2 id="currentQuestion"></h2>
+                    <!-- display answer options in the buttons here -->
                     <div id="answer-buttons">
                         <button class="d-flex flex-column answer-options" type="submit" value="Submit"
                             id="option1"></button>
@@ -81,12 +85,11 @@
                             id="option4"></button>
                     </div>
 
-                    <!-- where to publish the result of the last question, left empty at beginning ---- set a fixed height later-->
+                    <!-- where to publish the result of the last question, left empty at beginning-->
                     <div id="previous-result">
+                            <!-- result text added here -->
                         <span id="lastResult"></span>
                     </div>
-
-
 
                     <!-- button to exit quiz and go to view highscores -->
                     <button type="button" class="btn btn-primary btn-lg mx-auto large-button" id="go-to-HS">Exit
@@ -94,30 +97,42 @@
 
                 </span>
 
+                <!-- highscore  -->
                 <span id="enter-HS-displayed" style="display:none">
+                    <!-- span heading -->
                     <h1>All done!</h1>
                     <p>Enter your initals below</p>
+                    <!-- centered form -->
                     <form class="form-inline d-flex justify-content-center">
-                        <label class="mb-2 pr-2">Initials:</label>
-                        <div class="form-group mx-sm-3 mb-2">
+                        
+
+                        <div class="form-group mb-2">
+                            <!-- label initials -->
+                            <label class="pr-2">Initials:</label>
+                            <!-- input here -->
                             <input type="text" class="form-control" placeholder="e.g. AB" id="initials">
+                            <!-- submit button -->
+                            <button type="submit" class="btn btn-primary" id="submitInitials">Submit</button>
                         </div>
-                        <button type="submit" class="btn btn-primary mb-2" id="submitInitials">Submit</button>
+                        
                     </form>
 
                 </span>
 
                 <!-- highscores -->
                 <span id="highscores-displayed" style="display:none">
+                    <!-- span heading -->
                     <h1>Highscores</h1>
+                    <!-- centre this list -->
                     <div class="d-flex justify-content-center"> 
                         <ol id="high-scores-list"></ol>
                     </div>
-                    <!-- button to return home -->
+                    <!-- centre this div -->
                     <div class="d-flex justify-content-center">
+                        <!-- button to return home -->
                         <button type="button" class="btn btn-primary btn-lg m-2" id="go-back-to-home">Go back</button>
-                        <button type="button" class="btn btn-primary btn-lg m-2" id="clear-high-scores">Clear
-                            Highscores</button>
+                        <!-- button to clear highscores -->
+                        <button type="button" class="btn btn-primary btn-lg m-2" id="clear-high-scores">Clear Highscores</button>
                     </div>
                 </span>
 
