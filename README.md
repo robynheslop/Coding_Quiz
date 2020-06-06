@@ -18,6 +18,9 @@ Challenge those around you and see who scores the highest.
 
 ![Enter your initials](assets/scores.png)
 
-HTML validated with 
-JS validated with 
-CSS validated with 
+HTML validated with https://www.freeformatter.com/
+
+JS validated with https://esprima.org/
+
+CSS validated with http://www.css-validator.org/
+
