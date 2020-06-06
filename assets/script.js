@@ -123,7 +123,6 @@ function showQuestions() {
 // function to display highscore board span
 function showHS() {
     event.preventDefault();
-    renderInfo();
     // no display
     enterHS.style.display = "none";
     displayOpeningPage.style.display = "none";
@@ -132,8 +131,7 @@ function showHS() {
     quizTimer.style.display = "none";
     // block display
     displayHighScores.style.display = "block";
-    // ensure no timer is running (i)
-    clearInterval(interval);
+    
     // empty variables from last quiz (accessed if user click exit quiz or view HS)
     endOfQuiz()
 }
@@ -200,6 +198,9 @@ function startTimer() {
             showScoreSubmission()
             // empty variables from last quiz
             endOfQuiz()
+        } else if (showHS) {
+            // ensure no timer is running (i)
+            clearInterval(interval);
         }
     }, 1000);
 }
@@ -341,7 +342,7 @@ function renderInfo() {
         // access appropriate objects in variable and constuct display text to show data
         var publishName = storedHighScore[k].name;
         var publishScore = storedHighScore[k].score;
-        var publishingTExt = (publishName + " - -  " + publishScore);
+        var publishingTExt = (publishName + " - " + publishScore);
         // set the text element of list to publishing text var
         li.textContent = publishingTExt;
         // set an attribute to the list item equal to current k value
@@ -349,7 +350,8 @@ function renderInfo() {
         // append li item to ordered list of highscores 
         highScoreList.appendChild(li);
     }
-
+    // display highscore page
+    showHS();
 }
 
 // function to clear local storage, clear high score array and render to clear list of high scores 
@@ -376,7 +378,7 @@ submitDataButton.addEventListener("click", function (event) {
     var HSText = submittedInitials.value.trim();
     // create variable for score from final time
     var score = finalTime;
-    var q = 0
+
     // if no initials entered, stop
     if (HSText === "") {
         return;
@@ -387,10 +389,11 @@ submitDataButton.addEventListener("click", function (event) {
     highscoresObject.score = score;
     // push the object onto array called highscores
     highscores.push(highscoresObject);
-    storeInfo();
-    // empty initials + score for any future submissions
+
+    // empty variables holding initials and score for any future submissions
     submittedInitials.value = "";
-    showHS();
+    storeInfo();
+    renderInfo();
 });
 // add event listener to clear high score button
 clearHighScoresButton.addEventListener("click", emptyHS);
