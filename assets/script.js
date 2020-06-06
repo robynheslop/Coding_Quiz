@@ -49,6 +49,8 @@ var highScoreList = document.querySelector("#high-scores-list");
 // New variables
 // empty variable to loop through in question display
 var j = 0;
+// set empty variable to use for timer 
+var interval = "";
 // empty variable to hold the current correct answer
 var correctAnswer = "";
 // high scores var start off empty
@@ -92,7 +94,7 @@ var questions = [
         correct_answer: "console.log",
     },
     {
-        question: "The condition in an if/else statement is enclosed withing ____.",
+        question: "The condition in an if/else statement is enclosed within ____.",
         A1: "parentheses",
         A2: "curly brackets",
         A3: "quotes",
@@ -119,46 +121,12 @@ function showQuestions() {
     populateQuestions();
 }
 
+
 // function to display highscore board span
 function showHS() {
     event.preventDefault();
-    // function to render information from local storage and pin in to high score list
-    function renderInfo() {
-        // clear list each time (to reflect any higher scores) 
-        highScoreList.innerHTML = "";
-        // accessing string stored in local storage, turning it back into array
-        var storedHighScore = JSON.parse(localStorage.getItem("highscores"));
-
-        // if no high scores to display, end rendering. 
-        if (storedHighScore == null) {
-            return;
-        }
-
-        if (storedHighScore.length > 1) {
-        // sort array by the scores (high score becomes obj 0, 2nd highests obj 1)
-            storedHighScore.sort(function (a, b) {
-                return b.score - a.score;
-            })};
-        // create for loop the length of high score array
-        for (k = 0; k < storedHighScore.length; k++) {
-            // create list new element 
-            li = document.createElement("li");
-            // access appropriate objects in variable and constuct display text to show data
-            var publishName = storedHighScore[k].name;
-            var publishScore = storedHighScore[k].score;
-            var publishingTExt = (publishName + " - " + publishScore);
-            // set the text element of list to publishing text var
-            li.textContent = publishingTExt;
-            // set an attribute to the list item equal to current k value
-            li.setAttribute("data-index", k);
-            // append li item to ordered list of highscores 
-            highScoreList.appendChild(li);
-        }
-    }
-
+    // update and show contents of local storage highscores
     renderInfo();
-    
-    
     // no display
     enterHS.style.display = "none";
     displayOpeningPage.style.display = "none";
@@ -167,7 +135,8 @@ function showHS() {
     quizTimer.style.display = "none";
     // block display
     displayHighScores.style.display = "block";
-    
+    // stop timer if user exits quiz (sends them to hs display)
+    clearInterval(interval);
     // empty variables from last quiz (accessed if user click exit quiz or view HS)
     endOfQuiz()
 }
@@ -220,7 +189,9 @@ function clearTime() {
 // function to countdown timer each second and update display 
 function startTimer() {
     // create function to count down (runs every 1000 milliseconds)
-    interval = setInterval(function () {
+     interval = setInterval(timer, 1000)
+    
+        function timer() {
         // new variable to remove 1 from the current time displayed
         var now = currentTime.textContent - 1;
         // update current time display
@@ -236,13 +207,10 @@ function startTimer() {
             showScoreSubmission()
             // empty variables from last quiz
             endOfQuiz()
-        } else if (showHS) {
-            // ensure no timer is running (i)
-            clearInterval(interval);
-        }
-    }, 1000);
+        } 
+    }
 }
-    
+
 // function to pass through the questions 
 function populateQuestions() {
     // variable j used to loop through objects within array
@@ -359,6 +327,40 @@ function storeInfo() {
     localStorage.setItem("highscores", JSON.stringify(highscores));
 }
 
+// function to render information from local storage and pin in to high score list
+function renderInfo() {
+    // clear list each time (to reflect any higher scores) 
+    highScoreList.innerHTML = "";
+    // accessing string stored in local storage, turning it back into array
+    var storedHighScore = JSON.parse(localStorage.getItem("highscores"));
+
+    // if no high scores to display, end rendering. 
+    if (storedHighScore == null) {
+        return;
+    }
+
+    if (storedHighScore.length > 1) {
+    // sort array by the scores (high score becomes obj 0, 2nd highests obj 1)
+        storedHighScore.sort(function (a, b) {
+            return b.score - a.score;
+        })};
+    // create for loop the length of high score array
+    for (k = 0; k < storedHighScore.length; k++) {
+        // create list new element 
+        li = document.createElement("li");
+        // access appropriate objects in variable and constuct display text to show data
+        var publishName = storedHighScore[k].name;
+        var publishScore = storedHighScore[k].score;
+        var publishingTExt = (publishName + " - " + publishScore);
+        // set the text element of list to publishing text var
+        li.textContent = publishingTExt;
+        // set an attribute to the list item equal to current k value
+        li.setAttribute("data-index", k);
+        // append li item to ordered list of highscores 
+        highScoreList.appendChild(li);
+    }
+}
+
 // function to clear local storage, clear high score array and render to clear list of high scores 
 function emptyHS() {
     localStorage.clear("highscores");
@@ -366,7 +368,7 @@ function emptyHS() {
     newHighscoresObject = {};
 }
 
-
+// function to take input from score submission and process it, ready for local storage
 function processInputs() {
     
     event.preventDefault();
@@ -380,6 +382,7 @@ function processInputs() {
     if (HSText === "") {
         return;
     }
+    // if highscores has been cleared, reset variable to be ready to push info again.
     if (highscores === null) {
         highscores = [];
     }
@@ -397,9 +400,6 @@ function processInputs() {
     showHS();
 }
 
-if (highscores === null) {
-    highscore = [];
-}
 
 // event listened to start button
 startButton.addEventListener("click", showQuestions);
