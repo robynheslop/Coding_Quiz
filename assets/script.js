@@ -123,6 +123,7 @@ function showQuestions() {
 // function to display highscore board span
 function showHS() {
     event.preventDefault();
+    renderInfo();
     // no display
     enterHS.style.display = "none";
     displayOpeningPage.style.display = "none";
@@ -340,7 +341,7 @@ function renderInfo() {
         // access appropriate objects in variable and constuct display text to show data
         var publishName = storedHighScore[k].name;
         var publishScore = storedHighScore[k].score;
-        var publishingTExt = (publishName + " - " + publishScore);
+        var publishingTExt = (publishName + " - -  " + publishScore);
         // set the text element of list to publishing text var
         li.textContent = publishingTExt;
         // set an attribute to the list item equal to current k value
@@ -348,8 +349,7 @@ function renderInfo() {
         // append li item to ordered list of highscores 
         highScoreList.appendChild(li);
     }
-    // display highscore page
-    showHS();
+
 }
 
 // function to clear local storage, clear high score array and render to clear list of high scores 
@@ -387,12 +387,10 @@ submitDataButton.addEventListener("click", function (event) {
     highscoresObject.score = score;
     // push the object onto array called highscores
     highscores.push(highscoresObject);
-
-    // empty variables holding initials and score for any future submissions
-    HSText.value = "";
-    submittedInitials.value = "";
     storeInfo();
-    renderInfo();
+    // empty initials + score for any future submissions
+    submittedInitials.value = "";
+    showHS();
 });
 // add event listener to clear high score button
 clearHighScoresButton.addEventListener("click", emptyHS);
