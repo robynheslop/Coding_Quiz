@@ -2,7 +2,7 @@
 
 Let's find out! 
 
-Test your skills here: https://robynheslop.github.io/Coding_Quiz/
+Test your skills here: https://robynheslop.github.io/coding-quiz/
 
 This timed code quiz will test your knowledge with a few multiple-choice questions. The quicker and the more accurate, the better! Be sure to click on the correct answer, or your timer/score will be reduced by 15.
 
